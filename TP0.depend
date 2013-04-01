@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1364830841 source:/home/gustavo/workspace/TP0/src/Sequential.cpp
+	"Sequential.h"
+	<stdio.h>
+	<cstring>
+	<cstdlib>
+
+1364830291 /home/gustavo/workspace/TP0/include/Sequential.h
+	<stdio.h>
+
+1364830916 source:/home/gustavo/workspace/TP0/main.cpp
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<iostream>
+	<Sequential.h>
+
