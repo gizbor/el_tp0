@@ -1,15 +1,4 @@
 #include "Sequential.h"
-
-#ifndef __STDIO_SET_
-#include <stdio.h>
-#define __STDIO_SET_
-#endif
-
-#ifndef __CSTRING_SET_
-#include <cstring>
-#define __CSTRING_SET_
-#endif
-#include <cstdlib>
 #define MAX_REG_SIZE 98
 
 Sequential::Sequential() { //ctor

@@ -1,12 +1,10 @@
-#ifndef __STDIO_SET_
-#include <stdio.h>
-#define __STDIO_SET_
-#endif
+#include<necesary.h>
 #include<string.h>
 #include<stdlib.h>
 #include<iostream> // librería para uso de cout
 using namespace std;
 #include<Sequential.h>
+#include<Relative.h>
 #define SEQUENTIAL 's'
 #define RELATIVE 'r'
 #define DIRECT 'd'
@@ -145,3 +143,6 @@ switch (type_of_file) {
 
 // ERRORES
 // Segmentation fault: se cerraba en varios lados y el 1ro no ponia a NULL el handler.
+
+
+// strcpy <cstring>

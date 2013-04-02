@@ -1,10 +1,6 @@
 #ifndef SEQUENTIAL_H
 #define SEQUENTIAL_H
-
-#ifndef __STDIO_SET_
-#include <stdio.h>
-#define __STDIO_SET_l
-#endif
+#include "necesary.h"
 class Sequential
 {
     public:
