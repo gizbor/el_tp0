@@ -143,13 +143,6 @@ switch (type_of_file) {
             (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" <<endl;
          }
 
-
-
-
-
-
-
-
          if(strcmp(argv[3],"-d") == 0 ){
             if(argc != 4){ prn_error("Invalid number of paramenters!");}
             if(io.r_destroy() != 0 ){

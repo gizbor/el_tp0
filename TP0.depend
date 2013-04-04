@@ -5,7 +5,7 @@
 1364866185 /home/gustavo/workspace/TP0/include/Sequential.h
 	"necesary.h"
 
-1365106050 source:/home/gustavo/workspace/TP0/main.cpp
+1365116714 source:/home/gustavo/workspace/TP0/main.cpp
 	<necesary.h>
 	<string.h>
 	<stdlib.h>
@@ -21,6 +21,6 @@
 1365056040 /home/gustavo/workspace/TP0/include/Relative.h
 	"necesary.h"
 
-1365106030 source:/home/gustavo/workspace/TP0/src/Relative.cpp
+1365109628 source:/home/gustavo/workspace/TP0/src/Relative.cpp
 	"Relative.h"
 

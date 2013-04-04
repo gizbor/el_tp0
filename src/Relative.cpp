@@ -148,7 +148,6 @@ void cargar_prueba(){
 void Relative::show_i_reg(size_t n){
             char* data=r_i_read(n); //n-1);
             size_t num;
-//
             memcpy(&num, data, sizeof(size_t));
             printf("\nReg.: %d\n", num+1);
             memcpy(&num, data+sizeof(size_t), sizeof(size_t));
