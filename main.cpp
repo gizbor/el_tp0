@@ -63,12 +63,9 @@ switch (type_of_file) {
 }
 
 
+    if(get_type(argv) == SEQUENTIAL){
     // TODO: corregir a SEQUENTIAL
     Sequential io = Sequential();
-
-
-
-    if(io.is_sequential() == true){
 
          if(strcmp(argv[3],"-c") == 0 ){
 
@@ -121,6 +118,47 @@ switch (type_of_file) {
 
          io.s_close();
     } // END SEQUENTIAL
+//
+//printf("aca");
+    // RELATIVE
+    if(get_type(argv) == RELATIVE){
+
+        Relative io= Relative(argv[2]);
+        if(strcmp(argv[3],"-c") == 0 ){
+            if(argc != 4){ prn_error("Invalid number of paramenters!");}
+            int error=io.r_create("w");
+            if(error == 0){
+               cout<<"File succesfully created!!";
+            } else {
+               if(error == 1){
+                cout << "File already exists!";
+               }
+            }
+         }
+
+         if(strcmp(argv[3],"-rt") == 0){
+            if(argc != 5){ prn_error("Invalid number of paramenters!");}
+//                    printf("aca");
+            int error= io.r_write(argv[4], "t");
+            (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" <<endl;
+         }
+
+
+
+
+
+
+
+
+         if(strcmp(argv[3],"-d") == 0 ){
+            if(argc != 4){ prn_error("Invalid number of paramenters!");}
+            if(io.r_destroy() != 0 ){
+                cout << "Error deleting file!" << endl;
+            } else {
+                cout << "File successfully deleted!" << endl;
+            }
+         }    }
+    // END RELATIVE
 }
 
 // function get_action(char *args[]){

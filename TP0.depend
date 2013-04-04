@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1364847017 source:/home/gustavo/workspace/TP0/src/Sequential.cpp
+1364866185 source:/home/gustavo/workspace/TP0/src/Sequential.cpp
 	"Sequential.h"
 
-1364847184 /home/gustavo/workspace/TP0/include/Sequential.h
+1364866185 /home/gustavo/workspace/TP0/include/Sequential.h
 	"necesary.h"
 
-1364847106 source:/home/gustavo/workspace/TP0/main.cpp
+1365106050 source:/home/gustavo/workspace/TP0/main.cpp
 	<necesary.h>
 	<string.h>
 	<stdlib.h>
@@ -18,6 +18,9 @@
 	<cstring>
 	<cstdlib>
 
-1364852730 /home/gustavo/workspace/TP0/include/Relative.h
+1365056040 /home/gustavo/workspace/TP0/include/Relative.h
 	"necesary.h"
+
+1365106030 source:/home/gustavo/workspace/TP0/src/Relative.cpp
+	"Relative.h"
 

@@ -90,8 +90,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/Relative.h" />
 		<Unit filename="include/Sequential.h" />
+		<Unit filename="include/necesary.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Relative.cpp" />
 		<Unit filename="src/Sequential.cpp" />
 		<Extensions>
 			<envvars />
