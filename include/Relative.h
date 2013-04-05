@@ -36,7 +36,7 @@ class Relative
         int r_destroy();
         int is_open();
         char* index_name();
-        void create_treg(char * treg, char* text);
+        void create_treg(char** treg, char* text);
     protected:
 
 };

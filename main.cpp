@@ -140,7 +140,7 @@ switch (type_of_file) {
             if(argc != 5){ prn_error("Invalid number of paramenters!");}
 //                    printf("aca");
             int error= io.r_write(argv[4], "t");
-            (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" <<endl;
+            (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" << endl;
          }
 
          if(strcmp(argv[3],"-d") == 0 ){

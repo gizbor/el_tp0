@@ -45,7 +45,8 @@ int Relative::r_write(char *data, char *type){ // type: text or binary (another 
 
    if(strcmp(type,"t")==0){
         char treg[sizeof(size_t)+1+MAX_TEXT_REG_LENGTH];
-        create_treg(treg,data);
+        char* preg=&treg[0];
+        create_treg(&preg,data);
         fwrite(treg,1, sizeof(size_t)+1+strlen(data), f_d_handler); // hay que abrir en append
 
         append_index();
@@ -61,12 +62,12 @@ int Relative::r_write(char *data, char *type){ // type: text or binary (another 
 return 0;
 }
 
-void Relative::create_treg(char * treg, char* text){
+void Relative::create_treg(char ** treg, char* text){
     //eg: 0005\thola
     size_t size=strlen(text)+1;
-    memcpy(treg, &size, sizeof(size_t)); // save text length (withot '\0') and '\t' (+1)
+    memcpy(*treg, &size, sizeof(size_t)); // save text length (withot '\0') and '\t' (+1)
     treg+=sizeof(size_t);
-    memcpy(treg, "\t", 1);
+    memcpy(treg, "\t", 1); // just copy '\t' (without '\0')
     memcpy(treg+1, text, strlen(text));
 }
 
@@ -146,13 +147,13 @@ void cargar_prueba(){
 
 // PRE: 0 <= n <= N-1, N: number of registers
 void Relative::show_i_reg(size_t n){
-            char* data=r_i_read(n); //n-1);
-            size_t num;
-            memcpy(&num, data, sizeof(size_t));
-            printf("\nReg.: %d\n", num+1);
-            memcpy(&num, data+sizeof(size_t), sizeof(size_t));
-            printf("Offset: %d", num);
-            free(data);
+   char* data=r_i_read(n); //n-1);
+   size_t num;
+   memcpy(&num, data, sizeof(size_t));
+   printf("\nReg.: %d\n", num+1);
+   memcpy(&num, data+sizeof(size_t), sizeof(size_t));
+   printf("Offset: %d", num);
+   free(data);
 }
 
 // PSEUDO: -> agregar registro N: [N | OFFSET(N)=L(N-1)+O(N-1)]: [(size_t:4bytes)|(size_t:4bytes)]
