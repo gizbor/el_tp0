@@ -126,7 +126,7 @@ switch (type_of_file) {
         Relative io= Relative(argv[2]);
         if(strcmp(argv[3],"-c") == 0 ){
             if(argc != 4){ prn_error("Invalid number of paramenters!");}
-            int error=io.r_create("w");
+            int error=io.r_create();
             if(error == 0){
                cout<<"File succesfully created!!";
             } else {
@@ -138,7 +138,8 @@ switch (type_of_file) {
 
          if(strcmp(argv[3],"-rt") == 0){
             if(argc != 5){ prn_error("Invalid number of paramenters!");}
-//                    printf("aca");
+            io.r_create();
+          //  return 1;
             int error= io.r_write(argv[4], "t");
             (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" << endl;
          }

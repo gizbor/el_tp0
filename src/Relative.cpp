@@ -11,46 +11,78 @@ Relative::~Relative(){ //dtor
     r_close();
 }
 
+void close_file(FILE** fp){
+        if(*fp!=NULL){ fclose(*fp); *fp=NULL; }
+}
+
 void Relative::r_close(){
     if(is_open()==0){
-    fclose(f_d_handler); f_d_handler=NULL;
-    fclose(f_i_handler); f_i_handler=NULL;
+        close_file(&f_d_handler);
+        close_file(&f_i_handler);
     }
 }
-
+// +
 int Relative::r_open(char *mode){
-    //printf("%s\n",strcat(mode,"b"));
-    char m[3]; strcpy(m,mode); strcat(m,"b");
-    f_d_handler= fopen(filename, m); //data binary
-    f_i_handler= fopen(index_name(), m); //index binary
-
-return is_open();
-}
-
-int Relative::r_create(char *mode){
-    if(r_open(mode)==1){ return 1; }
+    if(r_file_exists() == 0){
+        char m[4]; strcpy(m,mode); strcat(m,"b");
+        f_d_handler= fopen(filename, m); //data binary
+        f_i_handler= fopen(index_name(), m); //index binary
+    } else {
+        return 1;
+    }
 return 0;
 }
 
+// + Description: open or create files and leave them thus.
+int Relative::r_create(){
+    if(r_file_exists() == 1){
+        f_d_handler=fopen(filename, "w+b");
+        f_i_handler=fopen(index_name(), "w+b");
+    }
+    if(f_d_handler==NULL||f_i_handler==NULL) { return 1; }
+return 0;
+}
+// +
+int Relative::r_file_exists(){
+    FILE *fpd=fopen(filename,"r+b"), *fpi=fopen(index_name(),"r+b");
+    if(fpd==NULL||fpi==NULL){
+        return 1;
+    }
+    fclose(fpd); fclose(fpi);
+return 0;
+}
+// +
 int Relative::is_open(){
     if(f_d_handler==NULL || f_i_handler==NULL){ return 1; }
 return 0;
 }
 
- // PRE: debe terminar en '\0' si es tipo "t" (text)
+// PRE:
+// 1- The strings must end with the character '\0'.
+// 2- The files must be created before a write operation.
 int Relative::r_write(char *data, char *type){ // type: text or binary (another file)
-   //if(!is_open()==0){return 1;} // open as write
 
-   if(r_open("a")==1){ return 1;}
+
+   if(r_open("r+")==1){
+        printf("There was an error opening the files!!");
+        return 1;
+   }
 
    if(strcmp(type,"t")==0){
-        char treg[sizeof(size_t)+1+MAX_TEXT_REG_LENGTH];
-        char* preg=&treg[0];
-        create_treg(&preg,data);
-        fwrite(treg,1, sizeof(size_t)+1+strlen(data), f_d_handler); // hay que abrir en append
+        size_t size=sizeof(size_t), data_length;
+        size_t full_data_reg_size=size+1+MAX_TEXT_REG_LENGTH;
 
+// TODO: create data reg
+        char treg[full_data_reg_size];
+        data_length=strlen(data)+1;
+        memcpy(treg, &data_length, size);
+        memcpy(treg+size, "\t",1);
+        memcpy(treg+size+1, data, data_length);
+
+        fseek(f_d_handler, 0, SEEK_END);
+        size_t error= fwrite(treg,1, sizeof(size_t)+1+strlen(data)+1, f_d_handler); // hay que abrir en append
+        close_file(&f_d_handler); // OJO: hasta que no cierra no escribe el archivo.
         append_index();
-//                printf("s"); exit; return 0;
    } else {
 
      if(strcmp(type,"b")==0){
@@ -68,7 +100,8 @@ void Relative::create_treg(char ** treg, char* text){
     memcpy(*treg, &size, sizeof(size_t)); // save text length (withot '\0') and '\t' (+1)
     treg+=sizeof(size_t);
     memcpy(treg, "\t", 1); // just copy '\t' (without '\0')
-    memcpy(treg+1, text, strlen(text));
+    memcpy(treg+1, text, strlen(text)+1); // OJO: el +1 es del fin
+    printf(*treg);
 }
 
 // Basura: sacar el tamaño de un archivo:
@@ -152,7 +185,7 @@ void Relative::show_i_reg(size_t n){
    memcpy(&num, data, sizeof(size_t));
    printf("\nReg.: %d\n", num+1);
    memcpy(&num, data+sizeof(size_t), sizeof(size_t));
-   printf("Offset: %d", num);
+   printf("Offset: %d\n", num);
    free(data);
 }
 
@@ -165,43 +198,45 @@ void Relative::show_i_reg(size_t n){
 // 5) Add new index reg.
 int Relative::append_index(){
     size_t size=sizeof(size_t), n, data_length;
-    FILE *fpi=fopen(index_name(),"r+b");
-    if(fpi!=NULL){
-        cargar_prueba();
-
-        size_t bytes_readed=fread(&n, 1, size, fpi);
-        if(bytes_readed==0){ n=0; } // emply index file => 0 regs
+    long position=ftell(f_i_handler);
+    FILE *f_i_handler=fopen(index_name(),"r+b");
+    char serialized_reg[get_reg_size()];
+    size_t offset, bytes_readed;
+    char * data;
+    int error;
+    if(f_i_handler!=NULL){
+       //cargar_prueba();
+        bytes_readed=fread(&n, 1, size, f_i_handler);
+        if(bytes_readed==0){ // emply index file => 0 regs
+            n=0;
+            error=fwrite(&n, 1, size, f_i_handler);
+        }
         // 1) -> 2)
         printf("Registros de indice: %d\n", n);
-//        fclose(fpi_r); // cierro para lectura (TODO)
-        char * data=r_read(n-1);;
-//        printf("%s\n", "ACA"); return 0;
+
+        data=r_read(n);
         memcpy(&data_length, data, size);
         printf("Tamaño del dato: %d\n", data_length);
         free(data);
+
         // 3) -> 4)
-        size_t offset=get_reg_offset(n-1);
+        (n==0) ? offset=0 : offset=size+1+data_length+get_reg_offset(n-1);
         // 5)
-        index_reg ir=create_i_reg(n, data_length+offset);
-        char serialized_reg[get_reg_size()];
+        index_reg ir=create_i_reg(n, offset);
         memcpy(serialized_reg, &(ir.index), size);
         memcpy(serialized_reg+size, &(ir.offset), size);
-
-        fseek(fpi, 0, SEEK_END);
-        int error=fwrite(serialized_reg, 1, get_reg_size(), fpi); // write new reg
+        fseek(f_i_handler, 0, SEEK_END);
+        error=fwrite(serialized_reg, 1, get_reg_size(), f_i_handler); // write new reg
 
         if(error!=0){
-            printf("Registro agregado!");
-            fseek(fpi, 0, SEEK_SET);
+            printf("Registro agregado!\n");
+            fseek(f_i_handler, 0, SEEK_SET);
             n++;
-            fwrite(&n, 1, size, fpi);
+            fwrite(&n, 1, size, f_i_handler);
+            close_file(&f_i_handler); // OJO!: cierro handlers
             show_i_reg(n-1);
         }
-
-    } else {
-        return 1; // file doesnt exists
-    }
-fclose(fpi);
+    } else { return 1; }// file doesnt exists
 return 0;
 }
 
@@ -280,3 +315,7 @@ return index_filename;
 //
 //- ./ejecutable [NOMBRE_ARCHIVO] -e
 //Elimina el archivo con ruta [NOMBRE_ARCHIVO].
+
+
+// NOTAS (BUGS):
+// Linea 85 cierro el archivo para que escriba.

@@ -19,7 +19,7 @@ class Relative
         virtual ~Relative();
         void r_close();
         int r_open(char *mode);
-        int r_create(char* mode);
+        int r_create();
         size_t get_reg_offset(size_t n);
         char* r_i_read(size_t n);
         int r_write(char *reg, char *type);
@@ -33,6 +33,7 @@ class Relative
         void r_list();
         int r_show(int offset, char *type);
         int r_search(char *reg);
+        int r_file_exists();
         int r_destroy();
         int is_open();
         char* index_name();
