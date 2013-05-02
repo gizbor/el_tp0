@@ -5,6 +5,7 @@
 		<Option title="TP0" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="include/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/TP0" prefix_auto="1" extension_auto="1" />
@@ -13,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Option parameters=' -r &quot;file&quot; -rt &quot;hola&quot; ' />
 				<Compiler>
+					<Add option="-pedantic" />
 					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add directory="include" />
@@ -63,11 +65,23 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="include/Relative.h" />
+		<Unit filename="include/Fisica/ArchivoBloqueRegVars.h" />
+		<Unit filename="include/Fisica/ArchivoRegVars.h" />
+		<Unit filename="include/Fisica/Bloque.h" />
+		<Unit filename="include/Fisica/Funciones.h" />
+		<Unit filename="include/Fisica/RegVar.h" />
+		<Unit filename="include/Fisica/Serializable.h" />
+		<Unit filename="include/Fisica/includes.h">
+			<Option virtualFolder="include/" />
+		</Unit>
 		<Unit filename="include/Sequential.h" />
 		<Unit filename="include/necesary.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/Relative.cpp" />
+		<Unit filename="src/Fisica/ArchivoBloqueRegVars.cpp" />
+		<Unit filename="src/Fisica/ArchivoRegVars.cpp" />
+		<Unit filename="src/Fisica/Bloque.cpp" />
+		<Unit filename="src/Fisica/Funciones.cpp" />
+		<Unit filename="src/Fisica/RegVar.cpp" />
 		<Unit filename="src/Sequential.cpp" />
 		<Extensions>
 			<envvars />

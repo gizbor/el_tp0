@@ -1,180 +1,99 @@
-#include<necesary.h>
-#include<string.h>
-#include<stdlib.h>
-#include<iostream> // librería para uso de cout
+#include "Fisica/Necesario2.h"
+#include "Fisica/ArchivoRegVars.h"
+#include "Fisica/ArchivoBloqueRegVars.h"
+#include "Fisica/Bloque.h"
+#include "Fisica/RegVar.h"
+
 using namespace std;
-#include<Sequential.h>
-#include<Relative.h>
-#define SEQUENTIAL 's'
-#define RELATIVE 'r'
-#define DIRECT 'd'
-#define INDEXED 'i'
-#define INVALID_FO 'x'
-
-char get_type(char *argv[]){
-
-char type = INVALID_FO;
-  if(strcmp(argv[1],"-s") == 0){
-     type= SEQUENTIAL;
-  } else {
-    if(strcmp(argv[1],"-r") == 0){
-     type= RELATIVE;
-    } else {
-     if(strcmp(argv[1],"-d") == 0){
-      type= DIRECT;
-     } else {
-       if(strcmp(argv[1],"-i") == 0){
-         type= INDEXED;
-        }
-     }
-    }
-  }
-return type;
-}
-
-int prn_error(char * msg){
-    cout << msg << endl;
-    exit;
-}
 
 int main(int argc, char *argv[]){
 
-if(argc == 1){ prn_error("Invalid number of paramenters!"); }
-
-const char type_of_file= get_type(argv);
-//const char action= get_action(argv);
-switch (type_of_file) {
-  case SEQUENTIAL:
-    cout <<  "Working with a sequential access file..."<< endl;
-    break;
-  case RELATIVE:
-    cout <<  "Working with a relative access file..."<< endl;
-    break;
-  case DIRECT:
-    cout << "Working with a direct access file..."<< endl;
-    break;
-  case INDEXED:
-    cout << "Working with a indexed access file..."<< endl;
-    break;
-  default:
-    cout << "Invalid type of file!"<< endl;
-
-    return 1;
-}
-
-
-    if(get_type(argv) == SEQUENTIAL){
-    // TODO: corregir a SEQUENTIAL
-    Sequential io = Sequential();
-
-         if(strcmp(argv[3],"-c") == 0 ){
-
-
-            int error=io.s_create(argv[2]);
-            if(error == 0){
-               cout<<"File succesfully created!!";
-            } else {
-               if(error == 1){
-                cout << "File already exists!";
-               }
-            }
-         }
-
-         if(strcmp(argv[3],"-r") == 0){
-
-            if(argc != 5){ prn_error("Invalid number of paramenters!");}
-            int error= io.s_write(argv[2],argv[4]);
-            (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" <<endl;
-         }
-
-         if(strcmp(argv[3],"-l") == 0){
-            if(argc != 4){ prn_error("Invalid number of paramenters!");}
-
-            if(io.s_open(argv[2],"r")!=0){ prn_error("Error opening file!"); }
-
-            io.s_list(argv[2]);
-         }
-
-         if(strcmp(argv[3],"-s") == 0){
-            if(argc != 5){ prn_error("Invalid number of paramenters!");}
-
-            if(io.s_open(argv[2],"r")!=0){ prn_error("Error opening file!"); }
-            int pos;
-            if((pos=io.s_search(argv[2], argv[4])) >= 0 ){
-                cout << "Register has been finded in position " << pos << endl;
-            } else {
-                cout << "Register was not found!" << endl;
-            }
-         }
-
-        if(strcmp(argv[3],"-d") == 0){
-            if(argc != 4){ prn_error("Invalid number of paramenters!");}
-            if(io.s_destroy(argv[2]) != 0 ){
-                cout << "Error deleting file!" << endl;
-            } else {
-                cout << "File successfully deleted!" << endl;
-            }
-         }
-
-         io.s_close();
-    } // END SEQUENTIAL
+//cout << "#### PRUEBAS CON ARCHIVO DE REG VARIABLES ####"<< endl;
 //
-//printf("aca");
-    // RELATIVE
-    if(get_type(argv) == RELATIVE){
-
-        Relative io= Relative(argv[2]);
-        if(strcmp(argv[3],"-c") == 0 ){
-            if(argc != 4){ prn_error("Invalid number of paramenters!");}
-            int error=io.r_create();
-            if(error == 0){
-               cout<<"File succesfully created!!";
-            } else {
-               if(error == 1){
-                cout << "File already exists!";
-               }
-            }
-         }
-
-         if(strcmp(argv[3],"-rt") == 0){
-            if(argc != 5){ prn_error("Invalid number of paramenters!");}
-            io.r_create();
-          //  return 1;
-            int error= io.r_write(argv[4], "t");
-            (error!=0) ? cout << "Error appending line!" << endl : cout << "Line appended successfully!" << endl;
-         }
-
-         if(strcmp(argv[3],"-d") == 0 ){
-            if(argc != 4){ prn_error("Invalid number of paramenters!");}
-            if(io.r_destroy() != 0 ){
-                cout << "Error deleting file!" << endl;
-            } else {
-                cout << "File successfully deleted!" << endl;
-            }
-         }    }
-    // END RELATIVE
-}
-
-// function get_action(char *args[]){
-//    return "f";
+//ArchivoRegVars* archi=  new ArchivoRegVars("archivo_reg_var.dat");
+//
+//t_num_ref i= archi->add("Este es el primer registro.");
+//
+//cout << "Referencia: " <<i<< endl;
+//
+//archi->add("Hola");
+//archi->add("Holaaaaaaaaaaaaaaaaaaaaa");
+//archi->add("SASDasdsadasdasdasddddddddddddddddddddddddddddwaaaaaaaaaaaaaaadsacascascascs4");
+//
+//for(i=0; i<=(archi->size())-1;i++){
+//    cout << "        Registro " << i << ": "<<archi->get(i)<< endl;
 //}
 
-// Manejo de Archivos de Texto Plano
-// > ./ejecutable [tipo: -[s|r|d|i]] [NOMBRE_ARCHIVO] -c:  Crea el archivo de texto en la ruta [NOMBRE_ARCHIVO].
-//
-// > ./ejecutable [tipo: -[s|r|d|i]] [NOMBRE_ARCHIVO] -r "[TEXTO]:  Registra el [TEXTO] en una línea del archivo de texto con ruta
-// [NOMBRE_ARCHIVO]. Si no está creado devuelve error.
-//
-// > ./ejecutable [tipo: -[s|r|d|i]] [NOMBRE_ARCHIVO] -l:  Muestra por pantalla las líneas de texto contenidas en el archivo de texto con
-// ruta [NOMBRE_ARCHIVO]. Si no está creado devuelve error.
-//
-// > ./ejecutable [tipo: -[s|r|d|i]] [NOMBRE_ARCHIVO] -s "[TEXTO]: Busca el [TEXTO] en las líneas del archivo de texto con ruta
-// [NOMBRE_ARCHIVO]. Muestra por pantalla las líneas que contienen el texto. Si no está creado devuelve error.
-//
-// > ./ejecutable [tipo: -[s|r|d|i]] [NOMBRE_ARCHIVO] -e: Elimina el archivo de texto con ruta [NOMBRE_ARCHIVO].
 
-// ERRORES
-// Segmentation fault: se cerraba en varios lados y el 1ro no ponia a NULL el handler.
+// Pruebas con archivo en bloques
+cout << "#### PRUEBAS CON ARCHIVO DE BLOQUES ####"<< endl;
+ArchivoBloqueRegVars* archivo= new ArchivoBloqueRegVars("bloques.dat", 26);
+
+Bloque b= Bloque(26);
+RegVar r=RegVar("Hola!");
+cout << "Bloque serializado: " << b.serializar() << endl;
+cout << "Libre: " << b.libre() << endl;
+cout << "Reg Var: " << r.serializar() << ", ocupa en total (serializado): " << r.serializar().size() <<endl;
+if(b.add(r)==true){
+    cout << "R1) Entra en el bloque!"<< endl;
+};
+
+cout << "Y este entra??" << endl;
+RegVar r2= RegVar("A");
+cout << "Bloque serializado: " << b.serializar() << endl;
+cout << "Libre: " << b.libre() << endl;
+cout << "Reg Var: " << r2.serializar() << ", ocupa en total (serializado): " << r2.serializar().size() <<endl;
+if(b.add(r2)==true){
+    cout << "Entra en el bloque!"<< endl;
+    cout << "Bloque serializado: " << b.serializar() << endl;
+    cout << "Espacio: " << b.libre() << endl;
+};
 
 
-// strcpy <cstring>
+///* Formato por bloque: CANT_DE_REGS(4bytes),   LISTA_DE_OFFSETS(4bytes)*,    DATOS */
+// 0002,00000009,0005Hola?0001A
+if((archivo->add_block(b))==true){
+cout << "Primer Bloque metido!!!!" <<endl;
+}
+
+//t_num_block n = archivo->add_reg_var(RegVar("hola mundo!"));
+t_num_block n = archivo->add_reg_var(RegVar("A"));
+/* No entro en el primer bloque => agrego uno nuevo con el dato */
+// 0002,000000090005,Hola!0001A|0001,0000,0001AXXXXXXXXXXXXX
+cout << "Reg var metido en: " << n<<endl;
+
+ n = archivo->add_reg_var(RegVar("B"));
+/* Entra en el ultimo bloque => lo meto */
+// 0002,000000090005,Hola!0001A|0001,00000005,0001A0001BXXXX
+cout << "Reg var metido en: " << n<<endl;
+
+n = archivo->add_reg_var(RegVar("CCC"));
+cout << "Reg var metido en: " << n<<endl;
+
+ n = archivo->add_reg_var(RegVar("DDD"));
+cout << "Reg var metido en: " << n<<endl;
+
+// Sacar datos:
+// 1) Sacar bloques:
+ Bloque bloque;
+ cout << "Cant de bloques " << archivo->size() << endl;
+
+int j;
+// Bucle que muesta todos los bucles
+for(n=0; n<=(archivo->size()-1); n++){
+Bloque b=    archivo->get_block(n);
+cout << "Bloque "<< n << " recuperado: " << b.serializar() << endl;
+    cout << "       Registros recuperados: " << endl;
+    // Bucle que muestra los registros almacenados dentro del bloque
+
+    for(j=0;j<=b.get_cant_reg_var()-1; j++){
+       RegVar r=b.get(j);
+       cout << "            Reg. Var. " << j << " Serializado: " <<r.serializar() << "---> Dato: " << r.get()<< endl;
+    }
+}
+
+return 0;
+
+}
+
+// OJO: si al archivo se lo inicializa de otra forma a Archivo* archivo = new Archivo("...") pincha por todos lados (!!!!!!!)

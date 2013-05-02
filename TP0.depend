@@ -5,22 +5,113 @@
 1364866185 /home/gustavo/workspace/TP0/include/Sequential.h
 	"necesary.h"
 
-1365141493 source:/home/gustavo/workspace/TP0/main.cpp
-	<necesary.h>
-	<string.h>
-	<stdlib.h>
-	<iostream>
-	<Sequential.h>
-	<Relative.h>
+1367510949 source:/home/gustavo/workspace/TP0/main.cpp
+	"Fisica/Necesario2.h"
+	"Fisica/ArchivoRegVars.h"
+	"Fisica/ArchivoBloqueRegVars.h"
+	"Fisica/Bloque.h"
+	"Fisica/RegVar.h"
 
-1364847049 /home/gustavo/workspace/TP0/include/necesary.h
+1367484877 /home/gustavo/workspace/TP0/include/necesary.h
 	<stdio.h>
 	<cstring>
 	<cstdlib>
+	<string.h>
+	<stdlib.h>
+	<iostream>
 
-1365140424 /home/gustavo/workspace/TP0/include/Relative.h
+1365314152 /home/gustavo/workspace/TP0/include/Relative.h
 	"necesary.h"
 
-1365304795 source:/home/gustavo/workspace/TP0/src/Relative.cpp
+1365314642 source:/home/gustavo/workspace/TP0/src/Relative.cpp
 	"Relative.h"
+
+1367092597 source:/home/gustavo/workspace/TP0/src/RVar.cpp
+	"RVar.h"
+
+1367119752 /home/gustavo/workspace/TP0/include/RVar.h
+	<string>
+
+1367510161 /home/gustavo/workspace/TP0/include/Fisica/ArchivoBloqueRegVars.h
+	"Fisica/Necesario2.h"
+	"RegVar.h"
+	"Bloque.h"
+
+1367305149 /home/gustavo/workspace/TP0/include/Fisica/includes.h
+	<stdio.h>
+	<cstring>
+	<cstdlib>
+	<string>
+	<sstream>
+	<iostream>
+	<fstream>
+	"Funciones.h"
+
+1367451343 /home/gustavo/workspace/TP0/include/Fisica/Bloque.h
+	"RegVar.h"
+	"Serializable.h"
+
+1367510145 /home/gustavo/workspace/TP0/include/Fisica/RegVar.h
+	"Fisica/Necesario2.h"
+	"Serializable.h"
+
+1367512376 source:/home/gustavo/workspace/TP0/src/Fisica/ArchivoBloqueRegVars.cpp
+	"Fisica/ArchivoBloqueRegVars.h"
+
+1367511114 source:/home/gustavo/workspace/TP0/src/Fisica/Bloque.cpp
+	"Fisica/Bloque.h"
+	"Fisica/Serializable.h"
+
+1367295873 source:/home/gustavo/workspace/TP0/src/Fisica/RegVar.cpp
+	"Fisica/RegVar.h"
+
+1367126027 /home/gustavo/workspace/TP0/include/RegVar.h
+	"Fisica/includes.h"
+
+1367160603 source:/home/gustavo/workspace/TP0/src/Fisica/Dato.cpp
+	"Fisica/Dato.h"
+
+1367166692 /home/gustavo/workspace/TP0/include/Fisica/Dato.h
+	<string>
+
+1367510138 /home/gustavo/workspace/TP0/include/Fisica/Serializable.h
+	"Fisica/Necesario2.h"
+
+1367266151 /home/gustavo/workspace/TP0/src/Fisica/funciones.cpp
+	"Fisica/includes.h"
+
+1367266151 source:/home/gustavo/workspace/TP0/src/Fisica/funciones.cpp
+	"Fisica/includes.h"
+
+1367511584 /home/gustavo/workspace/TP0/include/Fisica/Funciones.h
+	"Fisica/Necesario2.h"
+
+1367511690 source:/home/gustavo/workspace/TP0/src/Fisica/Funciones.cpp
+	"Fisica/Necesario2.h"
+
+1367511649 source:/home/gustavo/workspace/TP0/src/Fisica/ArchivoRegVars.cpp
+	"Fisica/ArchivoRegVars.h"
+
+1367510013 /home/gustavo/workspace/TP0/include/Fisica/ArchivoRegVars.h
+	"Fisica/Necesario1.h"
+	"RegVar.h"
+
+1367512215 /home/gustavo/workspace/TP0/include/Fisica/Necesario1.h
+	<stdio.h>
+	<cstring>
+	<cstdlib>
+	<string.h>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+
+1367305149 /home/gustavo/workspace/TP0/include/Fisica/Necesario2.h
+	<stdio.h>
+	<cstring>
+	<cstdlib>
+	<string>
+	<sstream>
+	<iostream>
+	<fstream>
+	"Funciones.h"
 
